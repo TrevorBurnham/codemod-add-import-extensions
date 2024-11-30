@@ -1,7 +1,7 @@
 import { posix } from "node:path";
 
 import type { SourceFile } from "ts-morph";
-import { filterDirContents } from "./util/fs.js";
+import { fileExists, filterDirContents } from "./util/fs.js";
 import type { Dirent } from "node:fs";
 
 // Use POSIX-based path conventions to avoid generating import paths with "\" under Windows.
@@ -25,9 +25,22 @@ export const processSourceFile = async (
 
     if (!isRelativeImportPath(originalImportPath)) continue;
 
+    const resolvedImportPath = path.join(sourceFileDirname, originalImportPath);
+
+    // If the import path already has a file extension, and there's a file that exactly matches it,
+    // then our work here is done.
+    if (
+      path.basename(originalImportPath).includes(".") &&
+      (await fileExists(resolvedImportPath))
+    ) {
+      continue;
+    }
+
+    // Otherwise, there's some ambiguity to resolve. We need to scan for all files that the import
+    // declaration could possibly be referring to.
     const validImportPaths = await findValidImportPaths(
-      sourceFileDirname,
       originalImportPath,
+      resolvedImportPath,
     );
 
     if (validImportPaths.length === 1) {
@@ -40,7 +53,7 @@ export const processSourceFile = async (
       }
     } else if (validImportPaths.length === 0) {
       warnings.push(
-        `${sourceFile.getFilePath()}: No matching files found for import path "${originalImportPath}".`,
+        `${sourceFile.getFilePath()}: No matching file found for import path "${originalImportPath}".`,
       );
     } else if (validImportPaths.length > 1) {
       warnings.push(
@@ -57,10 +70,9 @@ export const processSourceFile = async (
 };
 
 const findValidImportPaths = async (
-  sourceFileDirname: string,
   originalImportPath: string,
+  resolvedImportPath: string,
 ) => {
-  const resolvedImportPath = path.join(sourceFileDirname, originalImportPath);
   const importFilename = path.basename(originalImportPath);
 
   const validSiblingFiles = await filterDirContents(

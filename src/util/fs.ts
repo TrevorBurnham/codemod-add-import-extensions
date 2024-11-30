@@ -1,4 +1,4 @@
-import { opendir } from "node:fs/promises";
+import { opendir, stat } from "node:fs/promises";
 import type { Dirent } from "node:fs";
 
 /**
@@ -6,6 +6,7 @@ import type { Dirent } from "node:fs";
  *
  * @param dirPath
  * @param matcher
+ * @returns An array of matching items.
  */
 export const filterDirContents = async (
   dirPath: string,
@@ -17,4 +18,19 @@ export const filterDirContents = async (
     if (matcher(dirent)) matches.push(dirent);
   }
   return matches;
+};
+
+/**
+ * Check whether a file exists at the given path.
+ *
+ * @param filePath
+ * @returns true if `filePath` points to a file, false otherwise.
+ */
+export const fileExists = async (filePath: string) => {
+  try {
+    if ((await stat(filePath)).isFile()) return true;
+  } catch {
+    /* No matching file was found. */
+  }
+  return false;
 };

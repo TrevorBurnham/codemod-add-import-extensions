@@ -11,7 +11,7 @@ test("adds missing extensions to filenames", async () => {
 
   expect(warnings).toEqual([
     expect.stringContaining(
-      'test/fixtures/no-match/main.ts: No matching files found for import path "./404".',
+      'test/fixtures/no-match/main.ts: No matching file found for import path "./404".',
     ),
   ]);
 
