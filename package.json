@@ -21,7 +21,7 @@
     "prepare": "husky",
     "release": "np"
   },
-  "description": "Add file extensions to relative imports.",
+  "description": "Add file extensions to relative imports in TypeScript.",
   "dependencies": {
     "arg": "^5.0.2",
     "ts-morph": "^24.0.0"
