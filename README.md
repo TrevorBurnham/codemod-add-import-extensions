@@ -30,7 +30,7 @@ By default, all TypeScript files will be updated in place. If you'd prefer to se
 ## Why use explicit file extensions?
 
 - **Performance:** Using explicit file extensions makes imports faster. See [Speeding up the JavaScript ecosystem – module resolution](https://marvinh.dev/blog/speeding-up-javascript-ecosystem-part-2/).
-- Using explicit file extensions allows TypeScript to be run without a compilation step. To learn how, see the [TypeScript 5.7 release notes – Path Rewriting for Relative Paths](https://devblogs.microsoft.com/typescript/announcing-typescript-5-7/#path-rewriting-for-relative-paths).
+- **Direct execution:** Using explicit file extensions allows TypeScript to be run without a compilation step. To learn how, see the [TypeScript 5.7 release notes – Path Rewriting for Relative Paths](https://devblogs.microsoft.com/typescript/announcing-typescript-5-7/#path-rewriting-for-relative-paths).
 
 ## Preventing regressions
 
