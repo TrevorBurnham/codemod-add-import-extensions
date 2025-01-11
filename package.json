@@ -12,6 +12,9 @@
     "dist"
   ],
   "module": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "bin": "bin/bin.js",
   "scripts": {
     "build": "tsc",
