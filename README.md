@@ -20,6 +20,8 @@ npx codemod-add-import-extensions --tsconfig tsconfig.json
 
 By default, all TypeScript files will be updated in place. If you'd prefer to see what would change, use the `--dry-run` flag.
 
+If your `tsconfig.json` specifies [`allowImportingTsExtensions`](https://www.typescriptlang.org/tsconfig/#allowImportingTsExtensions) or [`rewriteRelativeImportExtensions`](https://www.typescriptlang.org/tsconfig/#rewriteRelativeImportExtensions), TypeScript extensions like `.ts` will be used. Otherwise, they'll be transformed to their `.js` equivalents.
+
 ## Limitations
 
 - Only ESM modules are supported, not CommonJS (`require("../x")`).

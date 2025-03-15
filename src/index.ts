@@ -17,10 +17,20 @@ export default async function codemodAddImportExtensions({
     tsConfigFilePath,
   });
 
+  const compilerOptions = project.getCompilerOptions();
+  const allowImportingTsExtensions = Boolean(
+    compilerOptions.allowImportingTsExtensions ??
+      compilerOptions.rewriteRelativeImportExtensions,
+  );
+
   const allWarnings = [];
 
   for (const sourceFile of project.getSourceFiles()) {
-    const { warnings } = await processSourceFile(sourceFile, silent, dryRun);
+    const { warnings } = await processSourceFile(sourceFile, {
+      silent,
+      dryRun,
+      allowImportingTsExtensions,
+    });
     allWarnings.push(...warnings);
   }
 

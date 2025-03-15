@@ -5,13 +5,13 @@ import { processSourceFile } from "../src/process";
 export const processFixtureSourceFile = async (
   fixtureDir: string,
   filename: string,
+  allowImportingTsExtensions = false,
 ) => {
   const project = new Project({
     tsConfigFilePath: path.join(fixtureDir, "tsconfig.json"),
   });
   return await processSourceFile(
     project.getSourceFile(path.join(fixtureDir, filename))!,
-    true,
-    true,
+    { silent: true, dryRun: true, allowImportingTsExtensions },
   );
 };

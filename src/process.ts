@@ -3,6 +3,7 @@ import { posix } from "node:path";
 import type { SourceFile } from "ts-morph";
 import { fileExists, filterDirContents } from "./util/fs.js";
 import type { Dirent } from "node:fs";
+import { transformTsExtension } from "./util/extensions.js";
 
 // Use POSIX-based path conventions to avoid generating import paths with "\" under Windows.
 const path = posix;
@@ -13,8 +14,7 @@ const isRelativeImportPath = (importPath: string) => {
 
 export const processSourceFile = async (
   sourceFile: SourceFile,
-  silent = false,
-  dryRun = false,
+  { silent = false, dryRun = false, allowImportingTsExtensions = false },
 ) => {
   const sourceFileDirname = path.dirname(sourceFile.getFilePath());
   const warnings = [];
@@ -45,7 +45,11 @@ export const processSourceFile = async (
 
     if (validImportPaths.length === 1) {
       const newImportPath = validImportPaths[0]!;
-      moduleSpecifier.setLiteralValue(newImportPath);
+      moduleSpecifier.setLiteralValue(
+        allowImportingTsExtensions
+          ? newImportPath
+          : transformTsExtension(newImportPath),
+      );
       if (!silent) {
         console.info(
           `${sourceFile.getFilePath()}: "${originalImportPath}" -> "${newImportPath}"`,
