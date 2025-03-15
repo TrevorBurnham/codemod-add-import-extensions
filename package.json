@@ -1,7 +1,7 @@
 {
   "name": "codemod-add-import-extensions",
   "version": "0.1.2",
-  "author": "Trevor Burnham",
+  "author": "Trevor Burnham (https://trevorburnham.com)",
   "homepage": "https://github.com/TrevorBurnham/codemod-add-import-extensions",
   "license": "MIT",
   "keywords": [
