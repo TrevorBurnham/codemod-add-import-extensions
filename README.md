@@ -34,4 +34,4 @@ By default, all TypeScript files will be updated in place. If you'd prefer to se
 
 ## Preventing regressions
 
-Once you've added file extensions to all of your relative imports, consider enabling the [`import/extensions` rule](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/extensions.md) from [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import) to ensure that they're used consistently going forward.
+Once you've added file extensions to all of your relative imports, consider enabling the [`import/extensions` rule](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/extensions.md) from [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import) or [eslint-plugin-import-x](https://github.com/un-ts/eslint-plugin-import-x) to ensure that they're used consistently going forward.
